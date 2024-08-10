@@ -1,0 +1,731 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% AMS uses the snapshot package to track which versions of other 
+%     packages are being loaded to ensure consistent compiles. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{snapshot}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% We expect most will use sections and subsections (and 
+%     possibly subsubsections). For those that do all numbering will
+%     be of the form section.subsection.counter use the equation
+%     as the counter and resetting it with each subsection. If so,
+%     please leave the lines below as is.
+%
+% To support any authors who wish to divide their notes only into  
+%     sections, or who prefer to use only unnumbered subsections via
+%     \subsection*, the following lines offer the option to do all 
+%     numbering in the form section.counter (again using the 
+%     equation counter) resetting with each section. 
+%     option which avoids having a subsection number of 0 everywhere
+%     please comment out the line \subsectionsfalse below and then
+%     comment out the line \subsectionstrue.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifsubsections
+% Uncomment this line and comment out the line below it if you use 
+%     numbered subsections in your notes. 
+%\subsectionstrue 
+% Uncomment this line and comment out the line above if you do not use 
+%     numbered subsections in your notes. 
+%\subsectionsfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Load PCMI lecture notes class file. 
+%     Please do not insert options to the class file to maintain
+%     consistency between the files of all authors.
+%
+% The class file requires (and automatically loads) the following 
+%     packages:
+%         float (provides support for better positioning of floats)
+%         setspace (provides support for adjustment of leading [spacing] of text)
+%         titlesec (provides support for sectioning commands and appearnace of toc)
+%     No need to load these packages if you wish to use them.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[]{pcmi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load packages to set up the fonts and provide support for color and     % graphics files.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts:  
+%      Palladino as the text family, a smaller Bera for sans
+%      Euler for math characters and Incolsolata for tt
+%      Incolsolata for for a fixed width "typewriter" font
+%      Bera if a sans serif family is required
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}          % Palatino with smallcaps as text font
+\usepackage{eulervm}               % Euler math
+\usepackage[scaled=0.86]{berasans} % Bera for san serif family
+\usepackage[scaled=1]{inconsolata} % Inconsolata for fixed width
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% We use only those microtype features supported by both pdftex and dvips
+%     (cf. Table 1 on p.7 of the microtype documentation). 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[%
+	protrusion=true,
+	expansion=false,
+	auto=false
+	]{microtype}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Support for color and inclusion of graphics through xcolor and graphicx
+%
+%     Please place any included graphics in a directory named "figures" 
+%     in the same directory as your LaTeX source file. You can then include 
+%     the file "circle.eps" from this folder by issuing the command
+%
+%         \includegraphics[]{circle.eps}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{{./figures/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define colors for internal and external links for use by authors
+%     if in draft mode (\drafttrue) and as black for final printing
+%     (draftfalse).
+%
+% Authors please imitate this model. If you want to use any colored text
+%     give your color a name and then use the ifdraft switch to set this
+%     name to your color for \drafttrue and also to black for \draftfalse.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifdraft
+	\definecolor{linkred}{rgb}{0.7,0.2,0.2}
+	\definecolor{linkblue}{rgb}{0,0.2,0.6}
+\else
+	\definecolor{linkred}{rgb}{0.0,0.0,0.0}
+	\definecolor{linkblue}{rgb}{0,0.0,0.0}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Authors: please load ALL packages you use that are not in the lists 
+%      above or below (where we have packages that need to be loaded 
+%      "late") at this point.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Authors: load additional packages here
+
+%\usepackage{pstricks,pst-plot,pst-node}
+
+
+\usepackage{amssymb,amsfonts,amsthm}
+%\usepackage{amsmath}
+\usepackage[makeroom]{cancel}
+\usepackage{mathtools}
+%\usepackage{yfonts}
+%\usepackage{mathrsfs,pifont}
+\usepackage{mathrsfs}
+\usepackage{pifont}% AO: removed mathrsfs as the script it uses clashes with the Euler math used here and replaced it with eucal
+\usepackage{eucal}
+\usepackage{slashed,mathabx} 
+\usepackage[bbgreekl]{mathbbol}
+\usepackage{enumitem}
+
+\usepackage[all]{xy}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Load hyperref and amsrefs packages: these MUST be the last packages 
+%     loaded or problems are very likely to result so please keep
+%     them in this position.
+%
+% Please do not alter any of the options given here to maintain
+%     consistency between authors and with the AMS production
+%     requirements. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PassOptionsToPackage{hyphens}{url} 
+\usepackage[
+    setpagesize=false,
+    pagebackref,
+	pdfpagelabels=false,
+    pdfstartview={FitH 1000},
+    bookmarksnumbered=false,
+    linktoc=all,
+    colorlinks=true,
+    anchorcolor=black,
+    menucolor=black,
+    runcolor=black,
+    filecolor=black,
+    linkcolor=linkblue,%IM black if not in draft mode
+	citecolor=linkblue,%IM black if not in draft mode
+	urlcolor=linkred,%IM black if not in draft mode
+]{hyperref}%IM
+\usepackage[backrefs,msc-links,nobysame]{amsrefs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Adjust aspects of formatting of references by amsrefs to match our style
+%         
+%     In particular this provides two macros for use in the eprints
+%         field of a bib entry
+%
+%     For pointers to arXiv preprints, simply use the arXiv citation key
+%         which is the numerical filename of the article abstract (found
+%         at the end of the URL for the abstract). Thus to reference
+%         http://arxiv.org/abs/1503.05174 simply insert \bibarxiv{1503.05174}.
+%         in the eprint field which would thus read
+%             \eprint={\bibarxiv{1503.05174}},
+%
+%     For pointers to preprints at other URLs, give the the full URL.
+%         as an argument to the macro \biburl. Thus to point to
+%             http://www.ugr.es/~jperez/papers/finite-top-sept29.pdf
+%         insert \biburl{http://www.ugr.es/~jperez/papers/finite-top-sept29.pdf}
+%         in the eprint field which would thus read
+%             \eprint={\biburl{http://www.ugr.es/~jperez/papers/finite-top-sept29.pdf}.},
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\customizeamsrefs 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Please load NO packages after  this point. Problems with hyperref or 
+%         amsrefs are likely to result if you do. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \newtheorems and other numbered elements
+%
+%     Use the area below to define your own \newtheorems using your preferred 
+%         aliases.
+%
+%     To ensure that your environments share the PCMI standard system for autonumbering:
+%         Use only the standard \theoremstyles plain, definition and remark and 
+%             avoid altering the formatting of these styles to ensure uniformity.
+%   
+%         Please tie all your \newtheorems to the equation counter by inserting 
+%             "[equation]" between the alias and the printed name of the 
+%             environement as in the examples below.
+%
+%         Please do NOT change the formatting of the equation counter. 
+%
+%     In order for floats such as Tables and Figures to number and 
+%         reference correctly, please make sure that your \label
+%         command is placed with AFTER or INSIDE the float caption.
+%
+%     This ensures that the label uses the counter value
+%          at the time the float is placed on a page which may be 
+%          different from the counter's value when the float was read 
+%          becuase the float has been moved forward or back.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Authors: define your theoremlike environments here
+
+\theoremstyle{plain}
+\newtheorem{Proposition}[equation]{Proposition}
+\newtheorem{Lemma}[equation]{Lemma}
+\newtheorem{Corollary}[equation]{Corollary}
+\newtheorem{Theorem}[equation]{Theorem}
+
+
+
+\theoremstyle{definition}
+\newtheorem{Definition}[equation]{Definition}
+\newtheorem{Exercise}[equation]{Exercise}
+\newtheorem{Example}[equation]{Example}
+\newtheorem{Remark}[equation]{Remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Macros
+%     At this point, place the roster of 'personal' macros you use 
+%         in writing up your lectures and other LaTeX files.
+%
+%     The two macros below are provided as examples. In this file
+%         the macro \replace indicates a field (like a name or 
+%         address) in which you need to replace a placeholder value  
+%         provided here with the corresponding value for you or your lectures.
+%
+%     You can verify that you have made all the intended replacements
+%         by simply deleting this macro and checking that no errors result. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Authors: insert your personal TeX macros here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{macros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Start of document body
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Filling in title page, running head and author fields.
+%
+% Each point in this template at which you will need to fill in your own
+%     information is indicated by a dummy \replace macro (shown above). 
+%     Replace this macro and its argument by your corresponding information.
+%
+%     For example, Gauss would replace  
+%         \author{\replace{Ian Morrison}}
+%     by 
+%         \author{Carl Friedrich Gauß}
+%
+%     Note that you may add a short title for running heads, if needed as an optional
+%         argument as in the example below
+%         \title[Guide for PCMI Authors]{Guide for Lecturers in the Park City Mathematics Institute}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[linear algebraic groups]{Linear Algebraic Groups} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+%    Author information--add further authors as needed
+%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Alan Yan}
+\date{} 
+\address{}
+\email{}
+%\address{
+%\newline Department of Mathematics,
+%Harvard University,
+%Cambridge, MA 02138 
+%}
+%\email{	alanyan@math.harvard.edu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Classification and abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\keywords{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+%    Make the title page
+%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+%    The remainder of this document is for your article
+%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Authors: insert the body here
+
+
+\section{Aims \& Scope} 
+
+These are my personal notes on linear algebraic groups. These notes are based on the book~\cite{Malle_Testerman_2011}. 
+
+\subsection{History}
+
+\section{Basic Concepts}
+
+\begin{Definition}
+    A \textbf{linear algebraic group} is an affine algebraic variety equipped with a group structure such that the group operations (multiplication and inversion) are morphisms of varieties. Let $\mu : G \times G \to G$ denote multiplication and $i : G \to G$ denote inversion. The space $G \times G$ is an affine algebraic variety equipped with the Zariski topology. 
+\end{Definition}
+
+
+\begin{Example}
+    \phantom{h}
+    \begin{enumerate}
+        \item The additive group $G = (k, +)$ corresponds to the zero ideal in $k[x]$. Addition and inversion are given by polynomials. Hence $G$ is an algebraic group with coordinate ring $k[G] = k[x]$. This group is called the \textbf{additive group}, denoted $\mathbf{G}_a$. 
+
+        \item The multiplicative group $G = (k^\times, \cdot)$ can be identified with the pairs $V(xy-1) = \{(x, y) \in k^2 : xy = 1\}$. The multiplication operation on $V(xy-1)$ is given by the polynomials $(x_1, y_1) \cdot (x_2, y_2) = (x_1x_2, y_1y_2)$ and the inverse is given by the polynomial map $(x, y) \mapsto (y, x)$. In this case, $k[G] \simeq k[x,y]/(xy-1) \simeq k[x^\pm]$. This group is called the \textbf{multiplicative group}, denoted $\mathbf{G}_m$. 
+
+        \item The \textbf{general linear group} $\GL_n \eqdef \{ A \in k^{n \times n} : \det (A) \neq 0 \}$ is an algebraic group. Indeed, $\GL_n$ can be identified with the algebraic set 
+        \[
+            \{ (A, t) \in k^{n \times n} \times k : \det(A) \cdot t = 1 \}. 
+        \]
+        The multiplication map is given by $(A_1, t_1) \cdot (A_2, t_2) = (A_1A_2, t_1t_2)$ is clearly polynomial. The inverse map is given by the polynomial map $(A, t) \mapsto (t \cdot \text{adj}(A), \det A)$ where $\text{adj}(A)$ is the \emph{adjugate matrix}. The coordinate ring is given by 
+        \[
+            k[\GL_n] = k[Y_{ij}, T] / (\det (Y_{ij}) T - 1) = k[Y_{ij}]_{\det (Y_{ij})}. 
+        \]
+    \end{enumerate}
+\end{Example}
+
+\begin{Definition}
+    A map $\varphi : G_1 \to G_2$ of linear algebraic groups is a \textbf{morphism of linear algebraic groups} if it is a group homomorphism and also a morphism of varieties. This means that the induced map $\varphi^* : k[G_2] \to k[G_1]$ is a $k$-algebra homomorphism. 
+\end{Definition}
+
+\begin{Example}
+    \phantom{h}
+    \begin{enumerate}
+        \item Let $G \subseteq \GL_n$ be a closed subgroup. Then the natural embedding $G \hookrightarrow \GL_n$ is a morphism of linear algebraic groups.
+
+        \item The determinant map $\det : \GL_n \to \mathbf{G}_m$ is a group homomorphism and a morphism of varieties. Indeed, the induced map $k[\mathbf{G}_m] \to k[\GL_n]$ is given by 
+        \[
+            k[T] \simeq k[G_2] \longrightarrow k[Y_{ij}]_{\det (Y_{ij})}, \quad T \mapsto \det(Y_{ij}). 
+        \]
+    \end{enumerate}
+\end{Example}
+
+\begin{Proposition}
+    Kernels and images of morphisms of algebraic groups are closed. 
+\end{Proposition}
+\begin{proof}
+    The kernel is closed because it is the continuous pre-image of a closed point. From Proposition~\ref{prop:1.6}, the image contains a (non-empty) open subset of its closure. It remains to show that if $G$ is a linear algebraic group, $H \subseteq G$ is a subgroup, and $H$ contains a (non-empty) open subset of its closure, then $H$ is closed. 
+
+    Suppose that $H$ contains a non-empty open subset of $\overline{H}$. Then $H$ is open in $\overline{H}$ since it is the union of translates of this open subset. But it is also closed in $\overline{H}$ since it is the complement of its non-trivial cosets. This implies $H = \overline{H}$ and completes the proof. 
+\end{proof}
+
+\begin{Theorem}
+    Let $G$ be a linear algebraic group. Then $G$ can be embedded as a closed subgroup into $\GL_n$ for some $n$. 
+\end{Theorem}
+
+The proof of this characterization of linear algebraic groups will be postponed. For an example, we can embed $\mathbf{G}_a \to \GL_2$ via the map 
+\[
+    t \mapsto \begin{pmatrix} 1 & t \\ 0 & 1 \end{pmatrix}. 
+\]
+This is an isomorphism onto a closed subset. 
+
+\subsection{Examples of Algebraic Groups}
+
+In this section we introduce important examples of linear algebraic groups. 
+
+\subsubsection{Upper Triangular Matrices}
+
+The group of invertible upper triangular matrices and the subgroup of upper triangular matrices with $1$'s on the diagonal and the group of diagonal invertible matrices are closed subgroups of $\GL_n$ (hence algebraic groups). 
+\begin{align*}
+    T_n & \eqdef \left \{ \begin{pmatrix} * & * & * \\ 0 & * & * & \\ 0 & 0 & * \end{pmatrix} \in \GL_n \right \} \\
+    U_n & \eqdef \left \{ \begin{pmatrix} 1 & * & * \\ 0 & 1 & * & \\ 0 & 0 & 1 \end{pmatrix} \in \GL_n \right \} \\
+    D_n & \eqdef \left \{ \begin{pmatrix} * & 0 & 0 \\ 0 & * & 0 & \\ 0 & 0 & * \end{pmatrix} \in \GL_n \right \} \\
+\end{align*}
+
+\begin{Definition}
+    \phantom{h}
+    \begin{enumerate}
+    \item A group $G$ is called \textbf{nilpotent} if the \textbf{descending central series} defined by 
+    \[
+        \cC^0 G \eqdef G, \quad \cC^i G \eqdef [\cC^{i-1}G, G] \text{ for } i \geq 1
+    \]
+    eventually reaches $1$. 
+    \item A group $G$ is called \textbf{solvable} if the \textbf{derived series} defined by 
+    \[
+        G^{(0)} \eqdef G, \quad G^{(i)} \eqdef [G^{(i-1)}, G^{(i-1)}] \text{ for } i \geq 1 
+    \]
+    eventually reaches $1$. The minimum such $d$ for which $G^{(d)} = 1$ is called the \textbf{derived length} of $G$. 
+    \end{enumerate}
+\end{Definition}
+
+For example $U_n$ is nilpotent and $T_n$ is solvable. 
+\subsubsection{The special linear groups}
+
+The \textbf{special linear group} of $n \times n$-matrices of determinant $1$ is a closed subgroup of $\GL_n$. 
+\[
+    \SL_n \eqdef \{A \in \GL_n : \det(A) = 1\}. 
+\]
+This has coordinate ring $k[\SL_n] = k[T_{ij}] / (\det (T_{ij}) - 1)$. 
+
+\subsubsection{The symplectic groups}
+
+For $n \geq 1$, let $J_{2n} \eqdef \begin{pmatrix} 0 & K_n \\ -K_n & 0 \end{pmatrix}$ where $K_n \eqdef \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix}$. The \textbf{symplectic group} in dimension $2n$ is the closed subgroup 
+\[
+    \Sp_{2n} \eqdef \{A \in \GL_{2n} : A^t J_{2n} A = J_{2n} \}. 
+\]
+This is a closed subgroup of $\GL_{2n}$, but the coordinate ring is complicated. The \textbf{conformal symplectic group} is also a closed subgroup of $\GL_{2n}$ and it is defined by 
+\[
+    \CSp_{2n} \eqdef \{A \in \GL_{2n} : A^t J_{2n} A = c J_{2n} \text{ for some } c \in k^\times \}. 
+\]
+Indeed, we have a morphism $\GL_n \to \mathbb{A}_k^{n^2}$ defined by $A \mapsto A^t J_{2n} A$. The group $\CSp_{2n}$ is then the pre-image of a closed subvariety isomorphic to $\mathbb{A}_k^1$. 
+
+\subsubsection{Odd-dimensional Orthogonal Groups}
+
+Suppose $\text{char}(k) \neq 2$. The \textbf{orthogonal group} in odd dimension $2n+1$ is defined by 
+\[
+    \GO_{2n+1} = \{A \in \GL_{2n+1} : A^t K_{2n+1} A = K_{2n+1}\}. 
+\]
+Alternatively, we can consider the quadratic form 
+\[
+    f(x_1, \ldots, x_{2n+1}) \eqdef x_1 x_{2n+1} + x_2 x_{2n} + \ldots + x_n x_{n+2} + x_{n+1}^2. 
+\]
+The group of isometries 
+\[
+    \GO_{2n+1} \eqdef \{A \in \GL_{2n+1} : f(Ax) = f(x) \text{ for all } x \in k^{2n+1}\}
+\]
+is the \textbf{odd dimensional orthogonal group} of $k$. We have the conformal version
+\[
+    \CO_{2n+1} \eqdef \{A \in \GL_{2n+1} : f(Ax) = cf(x) \text{ for all $x \in k^{2n+1}$ and some } c \in k^\times\}. 
+\]
+This is called the \textbf{odd-dimensional conformal orthogonal group}. The \textbf{even-dimensional} versions are defined similarly. 
+
+\begin{Remark}
+    Any non-degenerate symmetric bilinear form, non-degenerate skew-symmetric bilinear forms, and quadratic forms lead to the same groups up to conjugacy. The specific versions we chose above give certain natural subgroups a particularly nice shape. 
+\end{Remark}
+
+\subsubsection{Symmetric Group}
+
+Let $G$ be a finite group. Then $G$ has a faithful permutation representation $G \hookrightarrow \fS_n$ into a symmetric group. Moreover, we can embed $\fS_n \hookrightarrow \GL_n$ via the permutation representation. Combining these two, we have a closed embedding $G \hookrightarrow \GL_n$ whose image is a closed subgroup. Therefore, any finite group can be considered as a linear algebraic group, with the discrete topology. 
+
+\subsection{Connectedness}
+
+We say that a space is \textbf{connected} if it cannot be written as the disjoint union of two non-empty proper closed sets. A space is \textbf{irreducible} if it cannot be written as the union of two non-empty proper closed sets. Note that irreducible spaces are connected, but not the other way around. 
+
+\begin{Example}
+    We give examples of connected linear algebraic groups. 
+    \begin{enumerate}
+        \item $\mathbf{G}_a$ and $\mathbf{G}_m$ are connected because their coordinate rings are $k[\mathbf{G}_a] = k[x]$ and $k[\mathbf{G}_m] = k[x, x^{-1}]$. These are integral domains, which imply that they are irreducible hence connected. 
+
+        \item $\GL_n$ is connected because the coordinate ring $k[X_{ij}]_{\det(X_{ij})}$ is an integral domain. 
+    \end{enumerate}
+\end{Example}
+
+We need the following properties of affine varieties. 
+
+\begin{Proposition}
+    Let $X, Y$ be affine varieties. Then we have:
+    \begin{enumerate}[label = (\alph*)]
+        \item A subset $Z$ of $X$ is irreducible if and only if its closure $\overline{Z}$ is irreducible. 
+        \item If $X$ and $Y$ are irreducible, then $X \times Y$ is irreducible. 
+    \end{enumerate}
+\end{Proposition}
+
+\begin{proof}
+    Let $C_1$ and $C_2$ be two closed subsets. Then $Z \subseteq C_1 \cup C_2$ if and only if $\overline{Z} \subseteq C_1 \cup C_2$. Part (a) follows immediately. For part (b), it follows from the fact that the tensor product of domains is a domain. 
+\end{proof}
+
+\begin{Proposition}
+    Let $G$ be a linear algebraic group. 
+    \begin{enumerate}[label = (\alph*)]
+        \item The irreducible components of $G$ are pairwise disjoint, so they are the connected components of $G$. 
+        \item The irreducible component $G^\circ$ containing $1 \in G$ is a closed normal subgroup of finite index in $G$. 
+        \item Any closed subgroup of $G$ of finite index contains $G^\circ$.
+    \end{enumerate}
+\end{Proposition}
+
+\begin{proof}
+    For part (a), let $X$ and $Y$ be irreducible components of $G$. Suppose for the sake of contradiction that they intersect. Let $g \in X \cap Y$. Then $g^{-1}X$ and $g^{-1}Y$ are also irreducible components. Thus we can assume that $1 \in X \cap Y$. In this case, $\mu(X \times Y) = XY$ is irreducible since $X \times Y$ is irreducible. But $X \subset XY$ and $Y \subset XY$. Since $X$ and $Y$ are maximal irreducible sets, we have $X = XY = Y$ which completes the proof of (a). 
+
+    For part (b), let $X$ be the irreducible component containing $1$. Then $gXg^{-1}$ is an irreducible component that contains $1$. Thus $X = gXg^{-1}$. We also have $X \subseteq X \cdot X$. Since $X$ is maximal irreducible set, this implies $X = X \cdot X$. Also, we have $X = X^{-1}$. Thus $X$ is a normal subgroup of $G$. The irreducible components are translates of $X$ and they are disjoint. There are only finitely many irreducible components. This implies that $X$ has finite index. Irreducible components are always closed, so it is a closed normal subgroup of finite index in $G$. 
+
+    For part (c), let $H$ be a closed subgroup of $G$ of finite index. Then $H^0 \subseteq G^0 \subseteq G$. We have 
+    \[
+        [G : H^0] = [G : H] [H : H^0] < \infty
+    \] 
+    Thus $G^0 = \bigsqcup g H^0$ for finitely many cosets. But, since it is connected, it must be equal to $H^0$. Thus $G^0 = H^0 \subseteq H$. 
+\end{proof}
+
+\textcolor{red}{Punchline: } This implies that for linear algebraic groups, the concepts of \emph{connectedness} and \emph{irreducibility} coincide! Thus, we can refer to \emph{connected} and \emph{irreducible} components of $G$ simply as \emph{components}. 
+
+\begin{Example}
+    \phantom{h}
+    \begin{enumerate}
+        \item Let $G$ be a linear algebraic group, $H$ a proper closed subgroup of finite index. Then $G$ is not connected because then we can split up $G$ into a finite number of cosets of $H$ ($H$ contains $G^0$). For finite algebraic groups, we always have $G^0 = 1$. 
+
+        \item Recall the definition of the odd-dimensional orthogonal group (in the case $\text{char}(k) \neq 2$):  
+        \[
+            \GO_{2n+1} = \{A \in \GL_{2n+1} : A^t K_{2n+1} A = K_{2n+1} \}. 
+        \]
+        The determinant map $\det : \GO_{2n+1} \to \mathbf{G}_m$ has image $\{\pm 1\}$ since $-I_{2n+1} \in \GO_{2n+1}$. This shows that 
+        \[
+            \GO_{2n+1} \simeq \ker (\det) \times \langle -I_{2n+1} \rangle. 
+        \]
+        This is not connected. Similarly, $\GO_{2n}$ is not connected because it has a closed subgroup of index $2$. 
+    \end{enumerate}
+\end{Example}
+
+\begin{Definition}
+    For $n \geq 2$, the \textbf{special orthogonal group} $\SO_n \eqdef \GO_n^{\circ}$ is the connected component of the identity in $\GO_n$. 
+\end{Definition}
+
+The following fact from algebraic geometry allows one to establish the
+connectedness of some algebraic group.
+
+\begin{Proposition}
+    Let $G$ be a linear algebraic group and $\varphi_i : Y_i \to G$ be a family of morphisms from irreducible affine varieties $Y_i$ such that $1 \in G_i \eqdef \varphi_i(Y_i)$ for all $i \in I$. Then $H \eqdef \langle G_i : i \in I \rangle$ is a closed and connected subgroup. Moreover, there exist $n \in \NN$ and $(i_1, \ldots, i_n)  \in I^n$ such that $H = G_{i_1}^\pm G_{i_2}^\pm \ldots G_{i_n}^\pm$. 
+\end{Proposition}
+
+\begin{proof}
+    See Theorem 2.4.6 in~\cite{Geck2013}. 
+\end{proof}
+
+\begin{Example} \phantom{h}
+    \begin{enumerate}
+        \item Consider the upper and lower triangular groups 
+        \[
+            U_2^+ = \left \{ \begin{pmatrix} 1 & * \\ 0 & 1 \end{pmatrix} \right \} \simeq \mathbf{G}_a, \quad U_2^- = \left \{ \begin{pmatrix} 1 & 0 \\ * & 1 \end{pmatrix} \right \} \simeq \mathbf{G}_a. 
+        \]
+        Then one can check $\SL_2 = \langle U_2^+, U_2^- \rangle$. This show that $\SL_2$ is connected. In general, we can show that $\SL_n$, $T_n$, $U_n$, and $D_n$ are all connected. 
+
+        \item Centralizers of elements are not necessarily connected, even in a connected group. Let $G = \SL_2$ and $\text{char}(k) \neq 2$. Let 
+        \[
+            g = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \in G. 
+        \]
+        The centralizer is 
+        \[
+            C(g) = \left \{ \begin{pmatrix} a & b \\ 0 & a \end{pmatrix} : a, b \in k, a^2 = 1 \right \} = H \sqcup \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix} H
+        \]
+        where we have 
+        \[
+            H = \left \{ \begin{pmatrix} 1 & b \\ 0 & 1 \end{pmatrix} : b \in k \right \}. 
+        \]
+        $H$ is a closed subgroup of index $2$, which implies that $C(g)$ is not connected. 
+    \end{enumerate}
+\end{Example}
+
+\begin{Proposition}
+    Let $H, K$ be subgroups of a linear algebraic group $G$ where $K$ is closed and connected. Then $[H, K]$ is closed and connected. 
+\end{Proposition}
+
+\begin{proof}
+    $K$ is a linear algebraic group since it is closed. For every $h \in H$, we define the morphism $\varphi_h : K \to G$ by $g \mapsto [h, g]$. Then $[H, K] = \langle \varphi_h(K) \rangle$. From the proposition, we have that $[H, K]$ is closed and connected.   
+\end{proof}
+
+In particular, if $G$ is connected, then $[G, G]$ is also connected. 
+
+\subsection{Dimension}
+
+In this section, we discuss the \textbf{dimension} of a linear algebraic group. 
+
+\begin{Definition}
+    The following are equivalent definitions for dimension. 
+    \begin{enumerate}
+        \item Let $X$ be an irreducible variety. The coordinate ring $k[X]$ is an integral domain. Let $k(X)$ be the field of fractions of $k[X]$. Then $\dim X \eqdef \text{trdeg}_k(k(X))$, the transcendence degree. 
+
+        \item The dimension of $X$ equals the maximal length of decreasing chains of prime ideals in $k[X]$. 
+
+        \item If $X$ is a reducible affine variety, then we can decompose it into $X = X_1 \cup \ldots \cup X_r$. We define $\dim(X)$ to be the maximum of $\dim (X_i)$. 
+    \end{enumerate}
+\end{Definition}
+
+In particular, for a linear algebra group, we have $\dim G = \dim G^\circ$. Thus $\dim (G) = 0$ if and only if $G$ is finite. 
+
+\begin{Proposition}
+    Let $\varphi : X \to Y$ be a morphism of irreducible varieties with $\varphi(X)$ dense in $Y$. Then there is a non-empty open subset $U \subseteq Y$ with $U \subseteq \varphi(X)$ such that 
+    \[
+        \dim \varphi^{-1}(y) = \dim (X) - \dim (Y)
+    \]
+\end{Proposition}
+
+\begin{Corollary}\label{cor:rank-nullity}
+    Let $\varphi : G_1 \to G_2$ be a morphism of linear algebraic groups. Then 
+    \[
+        \dim (\im \varphi) + \dim (\ker \varphi) = \dim (G_1).
+    \]
+\end{Corollary}
+
+\begin{proof}
+    Every fiber is a coset of $\ker (\varphi)$. We can consider the map $\varphi : G_1^\circ \to \im (\varphi)^\circ$. We get 
+    \[
+        \dim \ker (\varphi) = \dim G_1 - \dim (\im (\varphi))
+    \]
+    which suffices for the proof. 
+\end{proof}
+
+\begin{Example}
+    \phantom{h}
+    \begin{enumerate}
+        \item $\dim (\mathbf{G}_a) = 1$ since $k[\mathbf{G}_a] = k[x]$ and every prime ideal has height $1$. 
+        \item $\dim (\mathbf{G}_m) = 1$ since $k[\mathbf{G}_m] = k[x, x^{-1}]$, it has the same field of fractions of $\mathbf{G}_a$. 
+        \item $\dim \GL_n = n^2$ since the field of fractions is just $k(Y_{ij})$. 
+        \item $\dim \SL_n = n^2 - 1$ from Corollary~\ref{cor:rank-nullity}. 
+    \end{enumerate}
+\end{Example}
+
+\begin{Proposition}
+    If $Y$ is a proper closed subset of an irreducible variety $X$, then $\dim Y < \dim X$. 
+\end{Proposition}
+
+\begin{proof}
+    The induced map is a quotient map by a prime ideal. This means we can always extend a chain of prime ideals in $k[Y]$ to a chain of prime ideals in $k[X]$. This suffices for the proof. 
+\end{proof}
+
+\section{Jordan Decomposition}
+
+\subsection{Decomposition of endomorphisms}
+
+The usual Jordan decomposition is the following: let $a \in \End(V)$ be an endomorphism of a vector space. Then we can write $a = n + s$ where $n$ is nilpotent, $s$ is semisimple, $ns = sn$, and $s = P(a)$, $n = Q(a)$ for $P, Q \in T \cdot k[T]$. We develop a multiplicative version of this decomposition. 
+
+\begin{Definition}
+    An endomorphism $u \in End(V)$ is called \textbf{unipotent} if $u - 1$ is nilpotent. 
+\end{Definition}
+
+\begin{Proposition}
+    For $g \in \GL(V)$, there exist unique $s, u \in \GL(V)$ such that $g = su = us$ where $s$ is semisimple and $u$ is unipotent. 
+\end{Proposition}
+
+\begin{proof}
+    Let $g = s + n$ be the Jordan decomposition. Then $g = s(1 + s^{-1}n)$. Let $u = 1 + s^{-1}n$. This is a valid such multiplicative decomposition. This is uniquely determined because we have 
+    \[
+        g = su = s(1 + n) = s + sn
+    \]
+    and uniqueness follows from uniqueness of Jordan decomposition. 
+\end{proof}
+
+\begin{Definition}
+    In the above, we call $s$ the semisimple part, $n$ the nilpotent part, and $u$ the unipotent part. 
+\end{Definition}
+
+For each $x \in G$, consider the morphism $r_x : g \mapsto gx$. This corresponds to a $k$-algebra morphism $\rho_x : k[G] \to k[G]$. This is given by $\rho_x(f)(g) \eqdef f(gx)$ for $f \in k[G]$ and $g \in G$. This gives $k[G]$ an (abstract) left $G$-action. We have the following "local" result: 
+
+\begin{Proposition}
+    Let $G$ be a linear algebraic group and $V$ a finite-dimensional subspace of $k[G]$. Then there exists a finite-dimensional $G$-invariant subspace $X$ of $k[G]$ containing $V$. In particular, $k[G]$ is the union of finite dimensional $G$-invariant subspaces. Moreover, the restriction to any such finite-dimensional subspace $X$ affords a morphism of algebraic groups $\rho : G \to \GL(X)$. 
+\end{Proposition}
+\appendix
+
+\section{Varieties}
+
+\begin{Proposition}\label{prop:1.6}
+    Let $\varphi : X \to Y$ be a morphism of varieties. Then $\varphi(X)$ contains a non-empty open subset of $\overline{\varphi(X)}$. 
+\end{Proposition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+% To add references to your document, replace the two \bib commands below. 
+%
+%         1. You can use a list of \bib commands for the items you reference as is
+%         done in our toy example here.
+%
+%         2. A second option is to use the command 
+%             \bibselect{yourltbfile}
+%         to point to a file of \bib commands that should be named 
+%         yourltbfile.ltb and be placed in the same folder as your LaTeX
+%         source files. 
+%
+%         3. A third option is to use the command 
+%             \bibliography{yourbibfile}
+%         to point to a file of BibTeX \bib commands that should be named 
+%         yourltbfile.bbl and be placed in the same folder as your LaTeX
+%         source files. 
+%   
+% If you use option 3. above, you should comment out or delete the lines
+%            \begin{bibdiv}
+%                \begin{biblist}
+%        before the \bib command below as well as the line
+%                  \end{biblist}
+%              \end{bibdiv}
+%        after it. 
+%
+% If you use options 2. or 3. and wish to make your source file self-contained you may
+%         for final submission, simply copy the \bib entries to your \LaTeX\ file and
+%         wrap them, if necessary, as indicated above.
+%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibspread
+\bibliographystyle{plain}
+\bibliography{ref}
+
+
+\vfill\eject
+\end{document}
