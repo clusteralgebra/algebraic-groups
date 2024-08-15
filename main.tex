@@ -121,7 +121,7 @@
 
 %\usepackage{pstricks,pst-plot,pst-node}
 
-
+\usepackage{quiver}
 \usepackage{amssymb,amsfonts,amsthm}
 %\usepackage{amsmath}
 \usepackage[makeroom]{cancel}
@@ -655,33 +655,147 @@ In particular, for a linear algebra group, we have $\dim G = \dim G^\circ$. Thus
 
 \subsection{Decomposition of endomorphisms}
 
-The usual Jordan decomposition is the following: let $a \in \End(V)$ be an endomorphism of a vector space. Then we can write $a = n + s$ where $n$ is nilpotent, $s$ is semisimple, $ns = sn$, and $s = P(a)$, $n = Q(a)$ for $P, Q \in T \cdot k[T]$. We develop a multiplicative version of this decomposition. 
+Recall the statement of the usual Jordan decomposition.
+
+\begin{Theorem}[Jordan-Chevalley Decomposition]
+    Let $V$ be a vector space over a nice enough field $k$. Let $a \in \End(V)$ be an endomorphism. Then there are unique $n, s \in \End(V)$ with $n$ nilpotent and $s$ semisimple where $a = n + s$ and $ns = sn$. In this case, there are polynomials $P, Q \in T \cdot k[T]$ such that $s = P(a)$ and $n = Q(a)$. 
+\end{Theorem}
+
+This can easily be translated to a multiplicative Jordan decomposition of $\GL(V)$. 
 
 \begin{Definition}
     An endomorphism $u \in End(V)$ is called \textbf{unipotent} if $u - 1$ is nilpotent. 
 \end{Definition}
 
 \begin{Proposition}
-    For $g \in \GL(V)$, there exist unique $s, u \in \GL(V)$ such that $g = su = us$ where $s$ is semisimple and $u$ is unipotent. 
+    For $g \in \GL(V)$, there exist unique $s, u \in \GL(V)$ with $s$ simple and $u$ unipotent such that $g = su = us$. 
 \end{Proposition}
 
 \begin{proof}
-    Let $g = s + n$ be the Jordan decomposition. Then $g = s(1 + s^{-1}n)$. Let $u = 1 + s^{-1}n$. This is a valid such multiplicative decomposition. This is uniquely determined because we have 
+    Let $g = s + n$ be an additive Jordan decomposition. Let $u = 1 + s^{-1}n$. Then, we have 
     \[
-        g = su = s(1 + n) = s + sn
+        su = s(1 + s^{-1}n) = s + n = (1 + s^{-1}n)s =us. 
     \]
-    and uniqueness follows from uniqueness of Jordan decomposition. 
+    This gives a multiplicative Jordan decomposition of $g$. To prove the uniqueness of the multiplicative Jordan decomposition, suppose that we have two $g = s_1 u_1$ and $g = s_2 u_2$. Then, we have 
+    \[
+        g = s_1 + s_1(u_1 - 1) = s_2 + s_2(u_2 - 1)
+    \]
+    are two additive Jordan decompositions. From the uniqueness of the additive version, we have $s_1 = s_2$ and $u_1 = u_2$. 
 \end{proof}
 
 \begin{Definition}
-    In the above, we call $s$ the semisimple part, $n$ the nilpotent part, and $u$ the unipotent part. 
+    In the above, we call $s$ the \textbf{semisimple part}, $n$ the \textbf{nilpotent part}, and $u$ the \textbf{unipotent part}. 
 \end{Definition}
 
-For each $x \in G$, consider the morphism $r_x : g \mapsto gx$. This corresponds to a $k$-algebra morphism $\rho_x : k[G] \to k[G]$. This is given by $\rho_x(f)(g) \eqdef f(gx)$ for $f \in k[G]$ and $g \in G$. This gives $k[G]$ an (abstract) left $G$-action. We have the following "local" result: 
+For each $x \in G$, consider the right multiplication map $r_x : G \to G$ given by $r_x(g) = gx$. This is a morphism of affine algebraic varieties. This corresponds to a $k$-algebra morphism $\rho_x : k[G] \to k[G]$ given by 
+\[ 
+    \rho_x(f)(g) \eqdef f(gx), \quad \text{ for all $f \in k[G]$ and $g \in G$}.
+\]
+This gives $k[G]$ an (abstract) left $G$-action. We have the following "local" result: 
 
 \begin{Proposition}
     Let $G$ be a linear algebraic group and $V$ a finite-dimensional subspace of $k[G]$. Then there exists a finite-dimensional $G$-invariant subspace $X$ of $k[G]$ containing $V$. In particular, $k[G]$ is the union of finite dimensional $G$-invariant subspaces. Moreover, the restriction to any such finite-dimensional subspace $X$ affords a morphism of algebraic groups $\rho : G \to \GL(X)$. 
 \end{Proposition}
+
+\begin{proof}
+    It suffices to prove this result for $V = \CC \langle f \rangle$ a one-dimensional subspace of $k[G]$. The multiplication map gives a $k$-algebra morphism 
+    \[
+        \mu^* : k[G] \to k[G \times G] = k[G] \otimes k[G]. 
+    \]
+    Let $\mu^*(f) = \sum f_i \otimes g_i$ where the sum is finite. Then $\rho_x(f) = \sum_i g_i(x) f_i$ from Equation~\ref{eqn:com-diagram-Pog}.
+
+    \begin{equation}\label{eqn:com-diagram-Pog}
+        \begin{tikzcd}
+            G && {G \times G} && G \\
+            \\
+            \\
+            {k[G]} && {k[G] \otimes k[G]} && {k[G]}
+            \arrow["{g \mapsto (g, x)}", from=1-1, to=1-3]
+            \arrow["{r_x}"', curve={height=24pt}, from=1-1, to=1-5]
+            \arrow["\mu", from=1-3, to=1-5]
+            \arrow["{f \otimes g \mapsto g(x)f}"', from=4-3, to=4-1]
+            \arrow["{\rho_x}", curve={height=-30pt}, from=4-5, to=4-1]
+            \arrow["{\mu^*}"', from=4-5, to=4-3]
+        \end{tikzcd}
+    \end{equation}
+
+    This implies that $\{\rho_x (f)\}$ is contained in the finite dimension vector space spanned by $\{f_i\}$. Thus $G \cdot V$ is $G$-invariant and is finite-dimensional. The coordinates of $\rho_x$ are clearly polynomial. Thus $g \mapsto \rho_x |_X$ gives a morphism of linear algebraic groups $G \mapsto \GL(X)$. 
+\end{proof}
+
+Let $V$ be a $k$-vector space. We say $x \in \End(V)$ is \textbf{locally finite} if $V$ is the union of finite-dimensional $x$-stable subspaces. We say $x$ is \textbf{locally semisimple}, respectively \textbf{locally nilpotent}, if its restriction to any finite-dimensional $x$-stable subspace is semisimple, respectively nilpotent. 
+
+Any locally finite endomorphism of $V$ has a Jordan decomposition. We also know that $\rho_x$ is a locally finite endomorphism of $k[G]$ for all $x \in G$. This allows us to prove the following theorem. 
+
+\begin{Theorem}[Jordan decomposition]
+    Let $G$ be a linear algebraic group. 
+    \begin{enumerate}[label = (\alph*)]
+        \item For any embedding $\rho$ of $G$ into some $\GL(V)$ and for any $g \in G$, there exist unique $g_s, g_u \in G$ such that $g = g_s g_u = g_u g_s$ where $\rho(g_s)$ is semisimple and $\rho(g_u)$ is unipotent. 
+        \item The decomposition $g = g_s g_u = g_u g_s$ is independent of the chosen embedding. 
+        \item Let $\varphi : G_1 \to G_2$ be a morphism of algebraic groups. Then $\varphi(g_s) = \varphi(g)_s$ and $\varphi(g_u) = \varphi(g)_u$. 
+    \end{enumerate}
+\end{Theorem}
+
+
+\begin{proof}
+    For part (a), the endomorphism $\rho_g : k[G] \to k[G]$ is locally finite, invertible linear transformation. There is a Jordan decomposition $\rho_g = (\rho_g)_s (\rho_g)_u$. Since $\rho_g$ is an algebra morphism, we can deduce that $(\rho_g)_s$ and $(\rho_g)_u$ are also algebra morphisms. Then, we maps 
+    \[
+        f \mapsto (\rho_g)_s(f)(e), \quad f \mapsto (\rho_g)_u(f)(e)
+    \]  
+    are algebra homomorphism $k[G] \to k$. That is, they correspond to points $g_s, g_u \in k[G]$. In other words, for all $f \in k[G]$ we have $(\rho_g)_s(f)(e) = g_s$ and $(\rho_g)_u (f)(e) = g_u$. We have that 
+    \[
+        ((\rho_g)_s f) (x) = (\ell(x^{-1}) (\rho_g)_s f)(e) = ((\rho_g)_s \ell(x^{-1}) f)(e) = \ell(x^{-1}) f (g_s) = \rho_{g_s} f(x).
+    \]
+    Thus, we have ${(\rho_g)}_s = \rho_{g_s}$ and similarly ${(\rho_g)}_u = \rho_{g_u}$. We have $\rho_g = \rho_{g_1} \rho_{g_2} = \rho_{g_1g_2}$ and $\rho_g = \rho_{g_2} \rho_{g_1} = \rho_{g_2g_1}$. Thus $g = g_u g_s = g_sg_u$. 
+\end{proof}
+
+
+\begin{Definition}
+    Let $G$ be a linear algebraic group. The decomposition $g = g_u g_s = g_s g_u$ is called the \textbf{Jordan decomposition} of $g \in G$, and $g$ is called semisimple, respectively unipotent, if $g = g_s$, respectively $g = g_u$. We write $G_u$ for the unipotent elements and $G_s$ for the semisimple elements. 
+\end{Definition}
+
+\begin{Example}
+    \phantom{h}
+    \begin{enumerate}
+        \item The additive group $\mathbf{G}_a$ is a unipotent group (and more generally so is $U_n$). This is because we can embed it into 
+        \[
+            \mathbf{G}_a = \left \{ \begin{pmatrix} 1 & a \\ 0 & 1 \end{pmatrix} : a \in k \right \}.
+        \]
+
+        \item $\mathbf{G}_m$ and $D_n$ consist of only semisimple elements. 
+    \end{enumerate}
+\end{Example}
+
+In general $G_u$ is closed, but $G_s$ is badly behaved. For example, lets look at $G = \GL_2$ and $g \in G \backslash G_s$. Then $g$ is conjugate to $\begin{pmatrix} a & 1 \\ 0 & a \end{pmatrix}$ for some $a \in k^\times$. We can define $\varphi : \mathbf{G}_m \to \GL_2$ by $\varphi(t) = \begin{pmatrix} at & 1 \\ 0 & at^{-1} \end{pmatrix}$. Then $\varphi$ is a morphism and $\varphi(t)$ is semisimple whenever $t \neq \pm 1$. This means $\varphi(\mathbf{G}_m \backslash \{\pm 1\}) \subseteq G_s$. We have 
+\[
+    \varphi(\mathbf{G}_m) = \varphi \left ( \overline{\mathbf{G}_m \backslash \{ \pm 1 \}} \right ) \subseteq \overline{G_s}
+\]
+Thus all non-semisimple elements lie in $\overline{G_s}$ so $\overline{G_s} = G$.
+
+\subsection{Unipotent groups}
+
+\begin{Proposition}
+    Let $G \leq \GL_n$ be a unipotent group. Then there exists $g \in \GL_n$ such that $g^{-1} G g \leq U_n$. 
+\end{Proposition}
+
+\begin{proof}
+    Let $V = k^n$. We induct on $n$. For $n = 1$, the only unipotent element in $\GL_1$ is $1$. This case is clear. Now suppose that $n > 1$. Suppose that there is a $G$-invariant proper subspace $0 \neq W \subseteq V$. By picking an appropriate basis, we have 
+    \[
+        G \leq \left \{\begin{pmatrix} * & * \\ 0 & * \end{pmatrix} \right \}.
+    \]  
+    The $G$-invariance induces natural homomorphisms $\varphi : G \to \GL(W)$, $\Phi : G \to \GL(V/W)$. By induction, up to a change of basis, we have 
+    \[
+        G \leq \left \{ 
+        \begin{pmatrix}
+            1 & * & * & * \\
+            0 & 1 & * & * \\
+            0 & 0 & 1 & * \\
+            0 & 0 & 0 & 1
+        \end{pmatrix} \right \} = U_n
+    \]
+    as claimed. 
+    
+    If $V$ is a irreducible representation of $G$, then the elements of $g$ generate the full endomorphism algebra $\End(V)$. Note that $\tr((g-1)h) = \tr(gh) - \tr(h) = 0$ for all $g, h \in G$ since the trace of unipotent elements is $n$. This implies that $\tr((g-1)x) = 0$ for all $x \in \End(V)$. This can only happen if $g = 1$. But this implies $G = 1$, contradicting irreducibility of $G$ acting on $V$. 
+\end{proof}
 \appendix
 
 \section{Varieties}

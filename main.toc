@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Aims \& Scope}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}History}{1}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Basic Concepts}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Examples of Algebraic Groups}{3}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.7}Upper Triangular Matrices}{3}{subsubsection.2.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.9}The special linear groups}{3}{subsubsection.2.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.10}The symplectic groups}{4}{subsubsection.2.1.10}%
+\contentsline {subsubsection}{\numberline {2.1.11}Odd-dimensional Orthogonal Groups}{4}{subsubsection.2.1.11}%
+\contentsline {subsubsection}{\numberline {2.1.13}Symmetric Group}{4}{subsubsection.2.1.13}%
+\contentsline {subsection}{\numberline {2.2}Connectedness}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Dimension}{7}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Jordan Decomposition}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Decomposition of endomorphisms}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Unipotent groups}{10}{subsection.3.2}%
+\contentsline {section}{\numberline {A}Varieties}{11}{appendix.A}%

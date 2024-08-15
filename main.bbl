@@ -1,0 +1,28 @@
+% \bib, bibdiv, biblist are defined by the amsrefs package.
+\begin{bibdiv}
+\begin{biblist}
+
+\bib{Geck2013}{book}{
+      author={Geck, Meinolf},
+       title={An introduction to algebraic geometry and algebraic groups},
+      series={Oxford Graduate Texts in Mathematics},
+   publisher={Clarendon Press},
+        date={2013},
+        ISBN={9780191663727},
+}
+
+\bib{Malle_Testerman_2011}{book}{
+      author={Malle, Gunter},
+      author={Testerman, Donna},
+       title={Linear algebraic groups and finite groups of {L}ie type},
+      series={Cambridge Studies in Advanced Mathematics},
+   publisher={Cambridge University Press, Cambridge},
+        date={2011},
+      volume={133},
+        ISBN={978-1-107-00854-0},
+         url={https://doi.org/10.1017/CBO9780511994777},
+      review={\MR{2850737}},
+}
+
+\end{biblist}
+\end{bibdiv}
